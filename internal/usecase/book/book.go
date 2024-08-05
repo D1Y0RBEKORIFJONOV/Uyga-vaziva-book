@@ -9,7 +9,7 @@ type BookUseCase interface {
 	CreateBook(ctx context.Context, req *bookeentity.CreateBookRequest) (*bookeentity.Book, error)
 	UpdateBook(ctx context.Context, req *bookeentity.UpdateBookRequest) (*bookeentity.Book, error)
 	GetBook(ctx context.Context, req *bookeentity.FieldValueReq) (*bookeentity.Book, error)
-	GetBookAll(ctx context.Context, req *bookeentity.GetAllBookReq) (*[]bookeentity.Book, error)
+	GetBookAll(ctx context.Context, req *bookeentity.GetAllBookReq) ([]*bookeentity.Book, error)
 	DeleteBook(ctx context.Context, req *bookeentity.FieldValueReq) error
 }
 
@@ -36,6 +36,6 @@ func (b *BookUseCaseImpl) DeleteBook(ctx context.Context, req *bookeentity.Field
 func (b *BookUseCaseImpl) GetBook(ctx context.Context, req *bookeentity.FieldValueReq) (*bookeentity.Book, error) {
 	return b.book.GetBook(ctx, req)
 }
-func (b *BookUseCaseImpl) GetBookAll(ctx context.Context, req *bookeentity.GetAllBookReq) (*[]bookeentity.Book, error) {
+func (b *BookUseCaseImpl) GetBookAll(ctx context.Context, req *bookeentity.GetAllBookReq) ([]*bookeentity.Book, error) {
 	return b.book.GetBookAll(ctx, req)
 }
