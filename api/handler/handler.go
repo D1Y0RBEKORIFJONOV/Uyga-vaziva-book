@@ -149,7 +149,7 @@ func (b *BookHandler) GetBook(c *gin.Context) {
 // @Success 200 {object} []bookEntity.Book
 // @Failure 400 {object} string
 // @Failure 500 {object} string
-// @Router /book/ [get]
+// @Router /book/list [get]
 func (b *BookHandler) GetBooks(c *gin.Context) {
 	field := c.Query("field")
 	value := c.Query("value")

@@ -17,6 +17,7 @@ type (
 		Title        string `json:"title"`
 		Author       string `json:"author"`
 		PublisherDay string `json:"publisherDay"`
+		ID           string `json:"id"`
 	}
 	FieldValueReq struct {
 		Field string `json:"field"`

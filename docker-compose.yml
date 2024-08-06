@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  go:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: myapp4
+    image: myapp7
+    environment:
+      - PG_URL=postgres://postgres:2005@mypost2:5432/docker?sslmode=disable
+    ports:
+      - "9001:8080"
+    depends_on:
+      - postgres
+      - migrate3
+    networks:
+      - mynetwork
+
+  postgres:
+    container_name: mypost2
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: docker
+      POSTGRES_PASSWORD: 2005
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - db-data1:/var/lib/postgresql/data
+      - ./initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+    networks:
+      - mynetwork
+
+  migrate3:
+    image: migrate/migrate:latest
+    restart: on-failure
+    networks:
+      - mynetwork
+    volumes:
+      - ./internal/database/migration:/migrations
+    command: [
+      "-path", "/migrations",
+      "-database", "postgres://postgres:2005@mypost2:5432/docker?sslmode=disable",
+      "up"
+    ]
+    depends_on:
+      - postgres
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  db-data1:
